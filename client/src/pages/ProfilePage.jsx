@@ -1,19 +1,46 @@
-import React, { use } from 'react'
+import React, {  useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
+import {AuthContext} from '../../context/AuthContext'
 
 const ProfilePage = () => {
+
+  const {authUser,updateProfile}= useContext(AuthContext)
+
   const[selectedImg, setSelectedImg] = React.useState(null)
   const navigate = useNavigate()
-  const [name, setName] = React.useState("David Laid")
-  const [bio, setBio] = React.useState("I am David laid")
-  const handelSubmit = async (e) => {
+  const [name, setName] = React.useState(authUser.fullName)
+  const [bio, setBio] = React.useState(authUser.bio)
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/')}
+
+    if (!selectedImg) {
+      await updateProfile({ fullName: name, bio });
+      navigate('/');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedImg);
+
+    reader.onload = async () => {
+      const base64Image = reader.result;
+
+      await updateProfile({
+        profilepic: base64Image,
+        fullName: name,
+        bio
+      });
+
+      navigate('/');
+    };
+  };
+
   return (
     <div className='min-h-screen bg-cover bg-no-repeat flex items-center justify-center'>
       <div className='w-5/6 max-w-2xl backdrop-blur-2xl text-gray-300 border-2 border-gray-600 flex items-center justify-between max-sm:flex-col-reverse rounded-lg'>
-        <form onSubmit={handelSubmit} className='flex flex-col gap-5 p-10 flex-1'>
+        <form onSubmit={handleSubmit} className='flex flex-col gap-5 p-10 flex-1'>
           <h3 className='text-lg'> Profile Details</h3>
           <label htmlFor="avatar" className='flex items-center gap-3 cursor-pointer'>
             <input onChange={(e)=>setSelectedImg(e.target.files[0])} type="file" id='avatar' accept='.png, .jpg, .jpeg' hidden />
@@ -24,7 +51,7 @@ const ProfilePage = () => {
           <textarea onChange={(e)=>setBio(e.target.value)} value={bio} placeholder='write profile bio' required className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' rows={4}></textarea>
           <button type='submit' className='bg-gradient-to-r from-violet-500 to-purple-500 text-white py-2 rounded-full text-lg cursor-pointer'>Save</button>
         </form>
-        <img src={assets.logo_icon} className='max-w-44 aspect-square rounded-full mx-10 max-sm:-10' alt="" />
+      <img src={assets.logo_icon} className={`max-w-44 aspect-square rounded-full mx-10 max-sm:-10 ${selectedImg && 'rounded-full'}`} alt="" />
       </div>
 
     </div>

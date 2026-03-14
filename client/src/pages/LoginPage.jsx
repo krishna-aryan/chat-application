@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import assets from '../assets/assets'
+import { AuthContext } from '../../context/AuthContext'
 
 const LoginPage = () => {
     const [currState , setCurrState] = React.useState('Sign up')
@@ -9,12 +10,17 @@ const LoginPage = () => {
     const [bio , setBio] = React.useState('')
     const [isDataSubmitted , setIsDataSubmitted] = React.useState(false)
 
+    const {login} = useContext(AuthContext)
+
     const onsubmitHandler = (event) => {
       event.preventDefault();
       if(currState === 'Sign up' && !isDataSubmitted){
         setIsDataSubmitted(true)
         return;
       }
+
+      login(currState === "Sign up" ? 'signup':'login',{fullName,email,password,bio })
+
       }
   return (
     <div className='min-h-screen bg-cover bg-center flex items-center justify-center gap-8 sm:justify-evenly max-sm:flex-col backdrop-blur-2xl'>
@@ -42,7 +48,7 @@ const LoginPage = () => {
           )}
           {
             currState === 'Sign up' && isDataSubmitted && (
-              <textarea onChange={(e)=>setBio(e.target.value)}value={bio} rows={4} className='p-2  border border-grey-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500' placeholder='provide a sort bio...'></textarea>
+              <textarea onChange={(e)=>setBio(e.target.value)}value={bio} rows={4} className='p-2  border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500' placeholder='provide a sort bio...'></textarea>
           )}
           <button type='submit' className='py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer'>
             {currState === 'Sign up' ? 'Create Account' : 'Login now'}
