@@ -50,7 +50,7 @@ const LoginPage = () => {
             currState === 'Sign up' && isDataSubmitted && (
               <textarea onChange={(e)=>setBio(e.target.value)}value={bio} rows={4} className='p-2  border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500' placeholder='provide a sort bio...'></textarea>
           )}
-          <button type='submit' className='py-3 bg-gradient-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer'>
+          <button type='submit' className='py-3 bg-linear-to-r from-purple-400 to-violet-600 text-white rounded-md cursor-pointer'>
             {currState === 'Sign up' ? 'Create Account' : 'Login now'}
           </button>
 

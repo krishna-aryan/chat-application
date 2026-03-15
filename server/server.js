@@ -41,7 +41,7 @@ io.on("connection",(socket)=>{
     });
     
 //middleware setup
-app.use(express.json({limit: '4mb'}));
+app.use(express.json({limit: '10mb'}));
 app.use(cors());
 
 //connect to the database

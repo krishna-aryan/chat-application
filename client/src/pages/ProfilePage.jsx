@@ -2,6 +2,7 @@ import React, {  useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import assets from '../assets/assets'
 import {AuthContext} from '../../context/AuthContext'
+import { useState , useEffect} from 'react'
 
 const ProfilePage = () => {
 
@@ -49,9 +50,9 @@ const ProfilePage = () => {
           </label>
           <input onChange={(e)=>setName(e.target.value)} value={name} type="text" required placeholder='your name' className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' />
           <textarea onChange={(e)=>setBio(e.target.value)} value={bio} placeholder='write profile bio' required className='p-2 border border-gray-500 rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' rows={4}></textarea>
-          <button type='submit' className='bg-gradient-to-r from-violet-500 to-purple-500 text-white py-2 rounded-full text-lg cursor-pointer'>Save</button>
+          <button type='submit' className='bg-linear-to-r from-violet-500 to-purple-500 text-white py-2 rounded-full text-lg cursor-pointer'>Save</button>
         </form>
-      <img src={assets.logo_icon} className={`max-w-44 aspect-square rounded-full mx-10 max-sm:-10 ${selectedImg && 'rounded-full'}`} alt="" />
+      <img src={authUser?.profilepic} className={`max-w-44 aspect-square rounded-full mx-10 max-sm:-10 ${selectedImg && 'rounded-full'}`} alt="" />
       </div>
 
     </div>
