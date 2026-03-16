@@ -89,6 +89,8 @@ export const AuthProvider = ({ children }) => {
         }
     };
 
+    
+
     // Connect socket
     const connectSocket = (userData) => {
 

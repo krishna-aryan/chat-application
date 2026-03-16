@@ -75,7 +75,12 @@ export const updateProfile = async(req, res) => {
         }
         res.json({success: true, updatedUser});
     } catch (error) {
-        console.log("Error updating profile:", error.message);
-        res.status(500).json({success: false, message:"Error updating profile", error:error.message});
+        console.log("Error updating profile:", error);
+        res.status(500).json({
+            success: false,
+            message: "Error updating profile",
+            error: error.message,
+            cloudinaryError: error.response || error.error || null
+        });
     }
 }
